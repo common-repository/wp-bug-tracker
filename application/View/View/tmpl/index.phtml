@@ -1,0 +1,228 @@
+<?php
+$factory = Router::get('Factory');
+$ui = Router::call('Settings.ui');
+?>
+<div class="wrap">
+    <div class="postbox-container" style="width:75%;">
+        <div class="metabox-holder">
+            <div id="metabox-main" class="postbox">
+                <div class="handlediv" title="<?php echo $factory->lang('Click to toggle'); ?>"><br /></div>
+                <h3 class="hndle"><span></span></h3>
+                <div class="inside" id="view_list">
+                    <div class="graph hide">
+                        <div class="graph-list">
+                            <a href="#" class="graph-type graph-line"><span>Error Counter</span></a>
+                            <a href="#" class="graph-type graph-pie"><span>Impact Counter</span></a>
+                        </div>
+                        <div class="graph-container">
+                            <div id="graph-lines"></div>
+                            <div id="graph-pie"></div>
+                        </div>
+                        <div class="graph-explain hide" id="explain_line">
+                            The graph shows the total number of Errors, Warnings and Notices detected by WP Error Fix for last <?php echo AHM_ERROR_DAYCOUNT; ?> days, grouped by day they appeared.
+                        </div>
+                        <div class="graph-explain hide" id="explain_pie">
+                            The pie graph indicates the negative impact each plugin or theme has on your WordPress installation. As bigger pie cut, as higher negative impact.
+                        </div>
+                        <div class="empty-error-log">
+                            <span><?php echo $factory->lang('There are no errors to display'); ?></span>
+                        </div>
+                    </div>
+                    <div class="list hide">
+                        <table class="display" id="list">
+                            <thead>
+                                <tr>
+                                    <th style="width:70%;"><?php echo $factory->lang('Message'); ?></th>
+                                    <th><?php echo $factory->lang('Last Time (Occured)'); ?></th>
+                                    <th style="width: 10%;"><?php echo $factory->lang('Status'); ?></th>
+                                    <th><?php echo $factory->lang('Type'); ?></th>
+                                    <th><?php echo $factory->lang('Module'); ?></th>
+                                    <th><?php echo $factory->lang('Solution'); ?></th>
+                                </tr>
+                            </thead>
+                            <tbody/>
+                        </table>
+                    </div>
+                    <div class="about ahm-content hide">
+                        <p>
+                            <b>WP Error Fix</b> is very lightful and at the same time powerful
+                            tool that allows you to control your WordPress system's health. It catches
+                            all Errors, Warnings and Notices, triggered by any active plugin of theme and
+                            displays the end report in nice graphs or table of errors.<br/>
+                            All triggered errors are reported to our server. This may
+                            become the great source for WordPress developers to improve their products.</br>
+                            <br/>
+                            <b>Available Solutions</b> section shows you the list of patches that are
+                            available to fix the issues your WordPress system has. Each error report you
+                            sent to us is logged and carefully analyzes by experts from our side. And based
+                            on this we prepare the patches (solutions) which can be easily applied to fix
+                            errors in your system.<br/><br/>
+                            <b>How does it work?</b><br/>
+                            Based on the reports you send to our server, we prepare the list of solutions
+                            specifically for your WordPress system. To retrieve this list, you have to press
+                            the button <b>Check</b> under <i>Available Solutions</i> section. As soon as list
+                            has been retrieve, you can check what errors can be fixed by each solution and apply
+                            the individual patch or list of selected patches.<br/>
+                            Please notice! This will physically modify files in your system. It means that
+                            any update or upgrade to WordPress system, any Plugin or Theme will remove applied patches
+                            and you will have to go through the same process over again.<br/>
+                            From our side we are trying to rich developers of the most used Plugins and Themes
+                            with the information about reported errors with hope that they are going to be fixed
+                            in next releases.
+                            <br/><br/>
+                            <b>Suppress and track all errors</b><br/>
+                            There is a way to suppress any error from printing and at the same time track it occurrence.<br/>
+                            Find the <b>wp-config.php</b> file (it is usually in the same folder as <b>index.php</b>).
+                            Open it and make sure that <span style='color:#0000e6;'>WP_DEBUG</span>
+                            is set to "<span style='color:#800000; font-weight:bold;'>false</span>"
+                            (in case you want to use the debug mode you can leave it "<span style='color:#800000;font-weight:bold;'>true</span>").
+                            Now you need to bootstrap the WP Error Fix
+                            with next line of code (put it right after <span style='color:#0000e6;'>WP_DEBUG</span> definition):
+                        <div class="code-container">
+                            <span style='color:#800000; background:#ffffe8; font-weight:bold;'>require_once</span>
+                            <span style='color:#808030; background:#ffffe8; '>(</span>
+                            <span style='color:#0000e6; background:#ffffe8; '>
+                                '<?php echo realpath(Router::call('Factory.contentDir') . '/plugins/wp-bug-tracker/bootstrap.php'); ?>'
+                            </span>
+                            <span style='color:#808030; background:#ffffe8; '>)</span>
+                            <span style='color:#800080; background:#ffffe8; '>;</span>
+                            <span style='color:#000000; background:#ffffe8; '></span>
+                        </div>
+                        <br/>
+                        <b>Would you like to know more?</b><br/>
+                        Please visit <a href="http://phpsnapshot.com" target="_blank">PHP Snapshot website</a> or send us an email at <a href="mailto:support@phpsnapshot.com">support@phpsnapshot.com</a>.
+                        </p>
+                    </div>
+                    <div class="message ahm-content hide">
+                        <p style="text-align: center; padding: 0px 10% 0px 15%;">
+                            Send us a short message. Please notice! Name and E-mail address are not required.
+                            But in case you are expecting a response, would be nice to enter at least an email address.
+                        </p>
+                        <table class="contact-form">
+                            <tbody>
+                                <tr>
+                                    <th width="25%">Name</th>
+                                    <td><input type="text" id="name" /></td>
+                                </tr>
+                                <tr>
+                                    <th>E-mail address</th>
+                                    <td><input type="text" id="email" /></td>
+                                </tr>
+                                <tr>
+                                    <th>Message<span class="asterix">*</span></th>
+                                    <td><textarea id="message" rows="5" cols="50"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td>
+                                    <td style="padding-top: 10px;">
+                                        <input type="button" value="Send a Message" class="button button-primary button-large" id="send_message" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="dynamic-message message-success">E-mail Sent Successfully!</div>
+                        <div class="dynamic-message message-failure">E-mail Sending Failed!</div>
+                    </div>
+                    <div class="register ahm-content hide">
+                        <div class="progress progress-loader">Registration...</div>
+                        <p>WP Error Fix is registering your WordPress installation. Please wait just a second. &nbsp;<a href="#" id="registration_more">Read more...</a></p>
+                        <p class="hide">
+                            Your interest in WP Error Fix is very important for us.
+                            This registration process will notify our system about your WordPress installation.
+                            As a response, unique key will be received to identify your system.
+                        </p>
+                    </div>
+                    <div class="analyze ahm-content hide">
+                        <div class="progress progress-loader">Analyzing...</div>
+                        <p>WP Error Fix is analyzing system error logs. Please wait a little. In case of big logs, this process may take a minute.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sidebox-container">
+        <div class="metabox-holder">
+            <div id="patchdiv" class="postbox">
+                <div class="handlediv" title="<?php echo $factory->lang('Click to toggle'); ?>"><br /></div>
+                <h3 class="hndle"><span><?php echo $factory->lang('Important Note'); ?></span></h3>
+                <div class="inside important-note">
+                    <p>
+						This Plugin is Deprecated and replaced with <a href="http://wordpress.org/plugins/wp-error-fix/" target="_blank">WP Error Fix</a>. 
+						Please deactivate and remove this plugin and download the new one.
+						Reporting & Solition Checking mechanism has been deactivated.
+					</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="metabox-holder">
+            <div id="submitdiv" class="postbox">
+                <div class="handlediv" title="<?php echo $factory->lang('Click to toggle'); ?>"><br /></div>
+                <h3 class="hndle"><span><?php echo $factory->lang('Control panel'); ?></span></h3>
+                <div class="inside">
+                    <div class="sidebar-content">
+                        <div class="misc-pub-section" id="current_view">
+                            <div class="ahm-menu chart-line" view="graph" title="<?php echo $factory->lang('Statistics & Graphs'); ?>"></div>
+                            <div class="ahm-menu list" view="list" title="<?php echo $factory->lang('Error List'); ?>"></div>
+                            <div class="ahm-menu info" view="about" title="<?php echo $factory->lang('About'); ?>"></div>
+                            <div class="ahm-menu message" view="message" title="<?php echo $factory->lang('Send a Message'); ?>"></div>
+                        </div>
+                        <div id="major-publishing-actions">
+                            <div>
+                                <div id="delete" class="clear-errors" title="Clear All Reports"></div>
+                                <a href="https://twitter.com/wpaam" target="_blank" class="twitter" title="Follow @wpaam"></a>
+                                <a href="http://wpaam.com" target="_blank" class="link" title="Visit Website"></a>
+                            </div>
+                            <div id="publishing-action">
+                                <span class="spinner"></span>
+                                <?php if (!isset($ui['registered']) || !$ui['registered']) { ?>
+                                    <input type="button" value="Register" class="button button-primary button-large" id="register">
+                                <?php } ?>
+                            </div>
+                            <br class="clear">
+                        </div>
+                    </div>
+                </div>
+                <div class="control-message hide" id="clear">
+                    <p><b>Are you really want to clean all error logs?</b></p>
+                    <a href="#" class="button button-primary button-large" id="clear_yes">Yes</a>
+                    <a href="#" class="button button-primary button-large" id="clear_no">No</a>
+                </div>
+                <div class="control-message hide" id="reload">
+                    <p><b>Operation is completed. Please reload the page.</b></p>
+                    <a href="#" class="button button-primary button-large" id="reload_page">Reload</a>
+                </div>
+            </div>
+        </div>
+		
+        <div class="metabox-holder">
+            <div id="patchdiv" class="postbox">
+                <div class="handlediv" title="<?php echo $factory->lang('Click to toggle'); ?>"><br /></div>
+                <h3 class="hndle"><span><?php echo $factory->lang('Available Solutions'); ?></span></h3>
+                <div class="inside">
+                    <div class="misc-pub-section">
+                        <table class="display" id="patches">
+                            <thead>
+                                <tr>
+                                    <th style="width:10%; text-align: center;"><input type="checkbox" id="check_all" /></th>
+                                    <th><?php echo $factory->lang('Patch'); ?></th>
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody/>
+                        </table>
+                    </div>
+                    <div id="major-publishing-actions">
+                        <div class="ahm-question" title="<?php echo $factory->lang('Learn more'); ?>"></div>
+                        <div id="publishing-action">
+                            <span class="spinner"></span>
+                            <input type="button" value="Check" class="button button-primary button-large" id="check" />
+                        </div>
+                        <br class="clear">
+                    </div>
+                </div>
+				<div class="feature-deactivated"></div>
+            </div>
+        </div>
+    </div>
+</div>
